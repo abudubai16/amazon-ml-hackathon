@@ -12,6 +12,11 @@ dataset/*
 dataset/
 *.csv
 
+.images/*
+images/*
+.images
+*.jpg
+
 # Distribution / packaging
 .Python
 build/
