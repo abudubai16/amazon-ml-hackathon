@@ -25,10 +25,11 @@ def text_from_image_pytesseract(image_path):
     return text
 
 
-def phi_ocr(image_path):
+def phi_ocr(image_url):
     import torch
     from transformers import AutoModelForCausalLM, AutoProcessor, BitsAndBytesConfig
     from PIL import Image
+    import requests
 
     model_id = "yifeihu/TB-OCR-preview-0.1"
 
@@ -49,8 +50,9 @@ def phi_ocr(image_path):
         trust_remote_code=True, 
         num_crops=16,)
 
-    question = "Convert the text to markdown format." # this is required
-    image = Image.open(image_path)
+    question = "Return only the units in the format: Value,unit"
+    # question = "Convert the text to markdown format." # this is required
+    image = Image.open(requests.get(image_url, stream=True).raw)
 
     prompt_message = [{
         'role': 'user',
@@ -71,7 +73,6 @@ def phi_ocr(image_path):
 
     return response
 
-
 def text_from_image_tocr(image_path):
     from transformers import TrOCRProcessor, VisionEncoderDecoderModel
     processor = TrOCRProcessor.from_pretrained("microsoft/trocr-base-printed")
@@ -89,9 +90,7 @@ def text_from_image_tocr(image_path):
 
 if __name__ == '__main__':
     
-    PATH = r'C:\Users\faroo\OneDrive\Documents\66e31d6ee96cd_student_resource_3\student_resource 3\images\615Cjzm6pyL.jpg'
-
-    response = phi_ocr(PATH)
+    response = phi_ocr('https://m.media-amazon.com/images/I/110EibNyclL.jpg')
     print(response)
     
     pass
