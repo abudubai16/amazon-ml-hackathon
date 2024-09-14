@@ -39,7 +39,8 @@ def phi_ocr(image_path):
     device_map=DEVICE, 
     trust_remote_code=True, 
     torch_dtype="auto", 
-    _attn_implementation='flash_attention_2',
+    # _attn_implementation='flash_attention_2',
+    # torch_dtype=torch.float32 
     quantization_config=BitsAndBytesConfig(load_in_4bit=True) # Optional: Load model in 4-bit mode to save memory
     )
 
@@ -71,8 +72,6 @@ def phi_ocr(image_path):
     return response
 
 
-
-
 def text_from_image_tocr(image_path):
     from transformers import TrOCRProcessor, VisionEncoderDecoderModel
     processor = TrOCRProcessor.from_pretrained("microsoft/trocr-base-printed")
@@ -90,7 +89,7 @@ def text_from_image_tocr(image_path):
 
 if __name__ == '__main__':
     
-    PATH = r'C:\Users\Abhyuday Chauhan\PycharmProjects\student_resource 3\images\41pvwR9GbaL.jpg'
+    PATH = r'C:\Users\faroo\OneDrive\Documents\66e31d6ee96cd_student_resource_3\student_resource 3\images\615Cjzm6pyL.jpg'
 
     response = phi_ocr(PATH)
     print(response)

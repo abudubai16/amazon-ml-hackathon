@@ -48,6 +48,7 @@ def create_placeholder_image(image_save_path):
 
 def download_image(image_link, save_folder, retries=3, delay=3):
     if not isinstance(image_link, str):
+        print('Not a string')
         return
 
     filename = Path(image_link).name
