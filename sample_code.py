@@ -9,11 +9,11 @@ def predictor(image_link, category_id, entity_name):
 
 if __name__ == "__main__":
     DATASET_FOLDER = '../dataset/'
-    PATH = r'C:\Users\faroo\OneDrive\Documents\66e31d6ee96cd_student_resource_3\student_resource 3\dataset\test.csv'
+    PATH = r'D:\Amazon ML hackathon\dataset\test.csv'
     # test = pd.read_csv(os.path.join(DATASET_FOLDER, 'test.csv'))
     test = pd.read_csv(PATH)
     rows = len(test)
-    test = test[(int)(rows*0.5):rows]
+    test = test[:(int)(rows*0.5)]
 
     test['prediction'] = test.apply(
         lambda row: predictor(row['image_link'], row['group_id'], row['entity_name']), axis=1,)
