@@ -73,6 +73,14 @@ def phi_ocr(image_url):
 
     return response
 
+def mmocr_text(image_url):
+    import requests
+    from mmocr.apis import MMOCRInferencer
+
+    ocr = MMOCRInferencer(det='DBNet', rec='CRNN')
+    text = ocr(Image.open(requests.get(image_url, stream=True).raw), show=True, print_result=True)
+    return text
+
 def text_from_image_tocr(image_path):
     from transformers import TrOCRProcessor, VisionEncoderDecoderModel
     processor = TrOCRProcessor.from_pretrained("microsoft/trocr-base-printed")
@@ -90,7 +98,7 @@ def text_from_image_tocr(image_path):
 
 if __name__ == '__main__':
     
-    response = phi_ocr('https://m.media-amazon.com/images/I/110EibNyclL.jpg')
+    response = mmocr_text('https://m.media-amazon.com/images/I/110EibNyclL.jpg')
     print(response)
     
     pass
