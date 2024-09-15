@@ -1,12 +1,12 @@
 import torch
 from PIL import Image
+from src.cleaning import  clean_text
 
+from ikomia.dataprocess.workflow import Workflow
+from PIL import Image
+from IPython.display import display
 
 def text_from_image_ikomia(image_url):
-    from ikomia.dataprocess.workflow import Workflow
-    from PIL import Image
-    from IPython.display import display
-
     # Init your workflow
     wf = Workflow()
 
@@ -25,15 +25,20 @@ def text_from_image_ikomia(image_url):
     display(Image.fromarray(image_data))
     
     text_fields = recognition_output.get_text_fields()
-
-    texts = [text_field.text for text_field in text_fields]
+    texts = ''
+    for text_field in text_fields:
+        texts += text_field.text + ' '
 
     return texts
 
+def final_model(image_url,entity_name):
+    text = clean_text(text_from_image_ikomia(image_url), entity_name=entity_name)
+    print(text)
+    return text
 
 if __name__ == '__main__':
     
-    a = text_from_image_ikomia('https://m.media-amazon.com/images/I/110EibNyclL.jpg')
+    a = final_model('https://m.media-amazon.com/images/I/110EibNyclL.jpg', 'width')
     print(a)
     
 
